@@ -4,8 +4,8 @@ const {createCustomer, getAllCustomer, updateCustomer, deleteCustomer, getCustom
 
 const router = express.Router();
 
-router.route("/products").get(getAllCustomer);
+router.route("/customers").get(getAllCustomer);
 router.route("/customer/new").post(createCustomer);
-router.route("/product/:id").put(updateCustomer).delete(deleteCustomer).get(getCustomerDetails);
+router.route("/customer/:id").put(updateCustomer).delete(deleteCustomer).get(getCustomerDetails);
 
 module.exports = router
