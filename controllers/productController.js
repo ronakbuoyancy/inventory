@@ -1,17 +1,18 @@
 const Product = require("../models/productSchema");
-const ErrorHandler = require("../utils/errorhandler");
+//const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 
 //create Product
 
-exports.createProduct = catchAsyncError(async (req, res, next) => {
+exports.createProduct = 
+  async (req, res, next) => {
   console.log("data", req.body);
   const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
     product,
   });
-});
+};
 
 exports.getAllProduct = catchAsyncError(async (req, res) => {
   const products = await Product.find();
