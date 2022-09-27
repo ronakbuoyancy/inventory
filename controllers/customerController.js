@@ -1,6 +1,7 @@
 const Customer = require("../models/customerSchema");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
+const ApiFeatures = require("../utils/apifeatures")
 
 exports.createCustomer = catchAsyncError(async (req, res, next) => {
   console.log("data", req.body);
@@ -12,8 +13,13 @@ exports.createCustomer = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllCustomer = catchAsyncError(async (req, res) => {
-  const customers = await Customer.find();
-  res.status(200).json({ success: true, customers });
+  const pageCount = Math.ceil((await Customer.find().count())/5)
+  const resultPerPage = 5;
+  const Apifeature = new ApiFeatures(Customer.find(), req.query)
+    .search()
+    .pagination(resultPerPage);
+  const customers = await Apifeature.query;
+  res.status(200).json({ success: true, customers, Totalpages:pageCount });
 });
 
 exports.getCustomerDetails = catchAsyncError(async (req, res, next) => {

@@ -22,7 +22,7 @@ exports.getAllProduct = catchAsyncError(async (req, res) => {
     .search()
     .pagination(resultPerPage);
   const products = await Apifeature.query;
-  res.status(200).json({ success: true, products, Totalpage:pageCount });
+  res.status(200).json({ success: true, products, Totalpages:pageCount });
 });
 
 exports.getProductDetails = catchAsyncError(async (req, res, next) => {
