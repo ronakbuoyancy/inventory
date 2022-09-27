@@ -16,12 +16,13 @@ exports.createProduct =
 };
 
 exports.getAllProduct = catchAsyncError(async (req, res) => {
+  const pageCount = Math.ceil((await Product.find().count())/5)
   const resultPerPage = 5;
   const Apifeature = new ApiFeatures(Product.find(), req.query)
     .search()
     .pagination(resultPerPage);
   const products = await Apifeature.query;
-  res.status(200).json({ success: true, products });
+  res.status(200).json({ success: true, products, Totalpage:pageCount });
 });
 
 exports.getProductDetails = catchAsyncError(async (req, res, next) => {
