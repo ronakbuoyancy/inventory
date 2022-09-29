@@ -14,7 +14,7 @@ exports.createCustomer = catchAsyncError(async (req, res, next) => {
 
 exports.getAllCustomer = catchAsyncError(async (req, res) => {
   const resultPerPage = 5;
-  const customerCount = await Product.countDocuments();
+  const customerCount = await Customer.countDocuments();
   const Apifeature = new ApiFeatures(Customer.find(), req.query)
     .searchCustomer()
     .pagination(resultPerPage);
