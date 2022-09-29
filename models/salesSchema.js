@@ -1,62 +1,110 @@
 const mongoose = require("mongoose");
 
 const salesSchema = new mongoose.Schema({
-  name: {
+
+  invoice_no:{
+    type:Number,
+    required: [true, "Please Enter Invoice Number"],
+  },
+  date_of_invoice: {
+    type: Date,
+    required: [true, "Please Enter Date of Invoice"],
+  },
+  shop_name: {
     type: String,
-    required: [true, "Please Enter product Name"],
-    trim: true,
+    required: [true, "Please Enter Shop Name"],
   },
-  description: {
+  address: {
     type: String,
-    required: [true, "Please Enter description"],
+    required: [true, "Please Enter Address"],
   },
-  price: {
+  contact_no: {
     type: Number,
-    required: [true, "Please Enter price"],
-    maxLength: 8,
+    maxLength: 10,
   },
-  rating: {
-    type: Number,
-    default: 0,
+  gst_no: {
+    type: String,
+    length:[15, "Enter valid GST number"]
   },
-  images: [
+  products: [
     {
-      public_id: {
+      product_name: {
         type: String,
-        required: true,
+        required: [true, "Please Enter product Name"],
       },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
-  category: {
-    type: String,
-    required: [true, "Please Enter Product Category"],
-  },
-  Stock: {
-    type: Number,
-    required: [true, "Please Enter Product Stock"],
-    maxLength: [4, "not exceed more then 4"],
-    default: 1,
-  },
-  reviews: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-      rating: {
+      hsn_code:{
         type: Number,
-        required: true,
+        required: [true, "Please Enter hsn code"],
+        maxLength: [6, "Not exceed more then 6"],
       },
-      comment: {
-        type: String,
-        required: true,
+      cost_price: {
+        type: Number,
+        required: [true, "Please Enter cost price"],
+        maxLength:8
       },
+      discuont_percentage:{
+        type: Number,
+        required: [true, "Please Enter discount Percentage"],
+        maxLength:4
+      },
+      discount_amount:{
+        type: Number,
+        required: [true, "Please Enter discount Amount"],
+        maxLength:8
+      },
+      taxable_amount:{
+        type: Number,
+        required: [true, "Please Enter discount Amount"],
+        maxLength:8
+      },
+      sgst_percentage: {
+        type: Number,
+        required: [true, "Please Enter SGST Percentage"],
+        maxLength:4
+      },
+      sgst_amount: {
+        type: Number,
+        required: [true, "Please Enter SGST value"],
+        maxLength:8
+      },
+      cgst_percentage: {
+        type: Number,
+        required: [true, "Please Enter CGST Percentage"],
+        maxLength:4
+      },
+      cgst_amount: {
+        type: Number,
+        required: [true, "Please Enter CGST value"],
+        maxLength:8
+      },
+
     },
   ],
+  gross: {
+    type: Number,
+    required: [true, "Please Enter Gross Amount"],
+    maxLength:8
+  },
+  discount: {
+    type: Number,
+    required: [true, "Please Enter Gross Amount"],
+    maxLength:8
+  },
+  sgst: {
+    type: Number,
+    required: [true, "Please Enter SGST value"],
+    maxLength:8
+  },
+ cgst: {
+    type: Number,
+    required: [true, "Please Enter CGST value"],
+    maxLength:8
+  },
+  Total:{
+    type: Number,
+    required: [true, "Please Enter Total value"],
+    maxLength:8
+  },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please Enter CGST value"],
   },
-  Stock: {
+  stock: {
     type: Number,
     required: [true, "Please Enter Product Stock"],
     maxLength: [8, "Not exceed more then 8"],
