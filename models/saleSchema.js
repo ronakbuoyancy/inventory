@@ -37,6 +37,11 @@ const saleSchema = new mongoose.Schema({
         required: [true, "Please Enter hsn code"],
         maxLength: [6, "Not exceed more then 6"],
       },
+      quantity:{
+        type: Number,
+        required: [true, "Please Enter Quantity"],
+        maxLength:4
+      },
       cost_price: {
         type: Number,
         required: [true, "Please Enter cost price"],
