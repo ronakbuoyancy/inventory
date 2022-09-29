@@ -1,68 +1,103 @@
 const mongoose = require("mongoose");
 
 const purchaseSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please Enter product Name"],
-    trim: true,
+
+  invoice_no:{
+    type:Number,
+    required: [true, "Please Enter Invoice Number"],
   },
-  description: {
-    type: String,
-    required: [true, "Please Enter description"],
+  date_of_invoice: {
+    type: Date,
+    required: [true, "Please Enter Date of Invoice"],
   },
-  price: {
-    type: Number,
-    required: [true, "Please Enter price"],
-    maxLength: 8,
+  dealer_name: {
+    type: String
   },
-  rating: {
-    type: Number,
-    default: 0,
-  },
-  images: [
+  products: [
     {
-      public_id: {
+      product_name: {
         type: String,
-        required: true,
+        required: [true, "Please Enter product Name"],
       },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
-  category: {
-    type: String,
-    required: [true, "Please Enter Product Category"],
-  },
-  Stock: {
-    type: Number,
-    required: [true, "Please Enter Product Stock"],
-    maxLength: [4, "not exceed more then 4"],
-    default: 1,
-  },
-  reviews: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-      rating: {
+      hsn_code:{
         type: Number,
-        required: true,
+        required: [true, "Please Enter hsn code"],
+        maxLength: [6, "Not exceed more then 6"],
       },
-      comment: {
-        type: String,
-        required: true,
+      perchase_price: {
+        type: Number,
+        required: [true, "Please Enter cost price"],
+        maxLength:8
       },
+      discount_percentage:{
+        type: Number,
+        required: [true, "Please Enter discount Percentage"],
+        maxLength:4
+      },
+      discount_amount:{
+        type: Number,
+        required: [true, "Please Enter discount Amount"],
+        maxLength:8
+      },
+      taxable_amount:{
+        type: Number,
+        required: [true, "Please Enter discount Amount"],
+        maxLength:8
+      },
+      sgst_percentage: {
+        type: Number,
+        required: [true, "Please Enter SGST Percentage"],
+        maxLength:4
+      },
+      sgst_amount: {
+        type: Number,
+        required: [true, "Please Enter SGST value"],
+        maxLength:8
+      },
+      cgst_percentage: {
+        type: Number,
+        required: [true, "Please Enter CGST Percentage"],
+        maxLength:4
+      },
+      cgst_amount: {
+        type: Number,
+        required: [true, "Please Enter CGST value"],
+        maxLength:8
+      },
+
     },
   ],
+  gross: {
+    type: Number,
+    required: [true, "Please Enter Gross Amount"],
+    maxLength:8
+  },
+  discount: {
+    type: Number,
+    required: [true, "Please Enter Gross Amount"],
+    maxLength:8
+  },
+  sgst: {
+    type: Number,
+    required: [true, "Please Enter SGST value"],
+    maxLength:8
+  },
+ cgst: {
+    type: Number,
+    required: [true, "Please Enter CGST value"],
+    maxLength:8
+  },
+  Total:{
+    type: Number,
+    required: [true, "Please Enter Total value"],
+    maxLength:8
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
 
-const Product = mongoose.model("product", purchaseSchema);
+const Purchase = mongoose.model("purchase", purchaseSchema);
 
-module.exports = Product;
+module.exports = Purchase;

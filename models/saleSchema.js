@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const salesSchema = new mongoose.Schema({
+const saleSchema = new mongoose.Schema({
 
   invoice_no:{
     type:Number,
@@ -42,7 +42,7 @@ const salesSchema = new mongoose.Schema({
         required: [true, "Please Enter cost price"],
         maxLength:8
       },
-      discuont_percentage:{
+      discount_percentage:{
         type: Number,
         required: [true, "Please Enter discount Percentage"],
         maxLength:4
@@ -111,6 +111,6 @@ const salesSchema = new mongoose.Schema({
   },
 });
 
-const Product = mongoose.model("product", salesSchema);
+const Sale = mongoose.model("sale", saleSchema);
 
-module.exports = Product;
+module.exports = Sale;
