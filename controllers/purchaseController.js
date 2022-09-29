@@ -16,12 +16,12 @@ exports.createPurchase = async (req, res, next) => {
 
 exports.getAllPurchase = catchAsyncError(async (req, res) => {
   const resultPerPage = 5;
-  const pageCount = Math.ceil(await Purchase.countDocuments()/resultPerPage);
+  const purchaseCount = await Purchase.countDocuments();
   const Apifeature = new ApiFeatures(Purchase.find(), req.query)
     .searchCustomer()
     .pagination(resultPerPage);
   const purchase = await Apifeature.query;
-  res.status(200).json({ success: true, purchase, Totalpages: pageCount });
+  res.status(200).json({ success: true, purchase, no_of_purchases: purchaseCount });
 });
 
 exports.getPurchaseDetails = catchAsyncError(async (req, res, next) => {

@@ -13,13 +13,13 @@ exports.createCustomer = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getAllCustomer = catchAsyncError(async (req, res) => {
-  const pageCount = Math.ceil((await Customer.find().count())/5)
   const resultPerPage = 5;
+  const customerCount = await Product.countDocuments();
   const Apifeature = new ApiFeatures(Customer.find(), req.query)
     .searchCustomer()
     .pagination(resultPerPage);
   const customers = await Apifeature.query;
-  res.status(200).json({ success: true, customers, Totalpages:pageCount });
+  res.status(200).json({ success: true, customers, no_of_customers:customerCount });
 });
 
 exports.getCustomerDetails = catchAsyncError(async (req, res, next) => {
