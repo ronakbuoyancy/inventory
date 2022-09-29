@@ -1,12 +1,11 @@
 const Product = require("../models/productSchema");
 //const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
-const ApiFeatures = require("../utils/apifeatures")
+const ApiFeatures = require("../utils/apifeatures");
 
 //create Product
 
-exports.createProduct = 
-  async (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
   console.log("data", req.body);
   const product = await Product.create(req.body);
   res.status(201).json({
@@ -16,13 +15,14 @@ exports.createProduct =
 };
 
 exports.getAllProduct = catchAsyncError(async (req, res) => {
-  const pageCount = Math.ceil((await Product.find().count())/5)
   const resultPerPage = 5;
+  const pageCount = Math.ceil(await Product.countDocuments()/resultPerPage);
   const Apifeature = new ApiFeatures(Product.find(), req.query)
-    .search()
+    .searchProduct()
     .pagination(resultPerPage);
   const products = await Apifeature.query;
-  res.status(200).json({ success: true, products, Totalpages:pageCount });
+  console.log(products.length)
+  res.status(200).json({ success: true, products, Totalpages: pageCount });
 });
 
 exports.getProductDetails = catchAsyncError(async (req, res, next) => {
@@ -61,7 +61,7 @@ exports.deleteProduct = catchAsyncError(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler("Product not Found", 404));
   }
-  await product.remove()
+  await product.remove();
   res.status(200).json({
     success: true,
     message: "Product deleted successfully",
