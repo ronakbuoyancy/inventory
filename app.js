@@ -12,11 +12,14 @@ app.use(cors());
 
 const product = require("./routes/productRoute");
 const customer = require("./routes/customerRoute");
-const sales = require("./routes/salesRoute");
+const sale = require("./routes/saleRoute");
+const purchase = require("./routes/purchaseRoute");
 
 app.use("/api", product)
 app.use("/api", customer)
-app.use("/api", sales)
+app.use("/api", sale)
+app.use("/api", purchase)
+
 
 
 app.use(errorMiddleware);
