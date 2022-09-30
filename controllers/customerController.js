@@ -4,7 +4,7 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apifeatures")
 
 exports.createCustomer = catchAsyncError(async (req, res, next) => {
-  console.log("data", req.body);
+  //console.log("data", req.body);
   const customer = await Customer.create(req.body);
   res.status(201).json({
     success: true,
