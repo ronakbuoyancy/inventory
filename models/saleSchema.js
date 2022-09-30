@@ -10,21 +10,23 @@ const saleSchema = new mongoose.Schema({
     type: Date,
     required: [true, "Please Enter Date of Invoice"],
   },
-  shop_name: {
-    type: String,
-    required: [true, "Please Enter Shop Name"],
-  },
-  address: {
-    type: String,
-    required: [true, "Please Enter Address"],
-  },
-  contact_no: {
-    type: Number,
-    maxLength: 10,
-  },
-  gst_no: {
-    type: String,
-    length:[15, "Enter valid GST number"]
+  customer:{
+    shop_name: {
+      type: String,
+      required: [true, "Please Enter Shop Name"],
+    },
+    address: {
+      type: String,
+      required: [true, "Please Enter Address"],
+    },
+    contact_no: {
+      type: Number,
+      maxLength: [10, "Enter Valid Contact Number"],
+    },
+    gst_no: {
+      type: String,
+      length:[15, "Enter valid GST number"]
+    },
   },
   products: [
     {
