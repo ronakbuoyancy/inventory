@@ -6,7 +6,7 @@ const ApiFeatures = require("../utils/apifeatures");
 //create Sale
 
 exports.createSale = async (req, res, next) => {
-  //console.log("data", req.body);
+  console.log("data", req.body);
   const sale = await Sale.create(req.body);
   res.status(201).json({
     success: true,
