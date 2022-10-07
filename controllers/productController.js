@@ -14,6 +14,13 @@ exports.createProduct = async (req, res, next) => {
   });
 };
 
+//for all product without pagination
+exports.getAllProducts = catchAsyncError(async (req, res) => {
+  const productCount = await Product.countDocuments();
+  const products = await Product.find()
+  res.status(200).json({ success: true, products, no_of_products: productCount });
+});
+
 exports.getAllProduct = catchAsyncError(async (req, res) => {
   const resultPerPage = 5;
   const productCount = await Product.countDocuments();
@@ -21,9 +28,10 @@ exports.getAllProduct = catchAsyncError(async (req, res) => {
     .searchProduct()
     .pagination(resultPerPage);
   const products = await Apifeature.query;
-  console.log(products.length)
   res.status(200).json({ success: true, products, no_of_products: productCount });
 });
+
+
 
 exports.getProductDetails = catchAsyncError(async (req, res, next) => {
   let product = await Product.findById(req.params.id);

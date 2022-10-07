@@ -11,6 +11,12 @@ exports.createCustomer = catchAsyncError(async (req, res, next) => {
     customer,
   });
 });
+//for all customer without pagination
+exports.getAllCustomers = catchAsyncError(async (req, res) => {
+  const customerCount = await Customer.countDocuments();
+  const customers = await Customer.find()
+  res.status(200).json({ success: true, customers, no_of_customers:customerCount });
+});
 
 exports.getAllCustomer = catchAsyncError(async (req, res) => {
   const resultPerPage = 5;
