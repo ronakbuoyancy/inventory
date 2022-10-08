@@ -3,7 +3,7 @@ const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 
 exports.createPayment = catchAsyncError(async (req, res, next) => {
-  //console.log("data", req.body);
+  console.log("data", req.body);
   const payment = await Payment.create(req.body);
   res.status(201).json({
     success: true,
