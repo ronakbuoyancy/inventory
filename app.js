@@ -19,11 +19,13 @@ const product = require("./routes/productRoute");
 const customer = require("./routes/customerRoute");
 const sale = require("./routes/saleRoute");
 const purchase = require("./routes/purchaseRoute");
+const payment = require("./routes/paymentRoute");
 
 app.use("/api", product)
 app.use("/api", customer)
 app.use("/api", sale)
 app.use("/api", purchase)
+app.use("/api", payment)
 
 
 
