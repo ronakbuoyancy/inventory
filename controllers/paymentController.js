@@ -7,13 +7,12 @@ exports.createPayment = catchAsyncError(async (req, res, next) => {
   //console.log("data", req.body);
   const payment = await Payment.create(req.body);
   const customer = await Customer.findById(req.body.customer_id)
-  const balance = customer.balance + req.body.amount
-  const data = await Customer.findByIdAndUpdate(req.body.customer_id, {balance:balance}, {
+  const balance = customer.balance - req.body.amount
+  await Customer.findByIdAndUpdate(req.body.customer_id, {balance:balance}, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
-  console.log(data)
   res.status(201).json({
     success: true,
     payment,

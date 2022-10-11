@@ -11,6 +11,11 @@ const saleSchema = new mongoose.Schema({
     required: [true, "Please Enter Date of Invoice"],
   },
   customer:{
+    customer_id:{
+      type:mongoose.Schema.ObjectId,
+      ref:"Customer",
+      required:true
+    },
     shop_name: {
       type: String,
       required: [true, "Please Enter Shop Name"],
@@ -30,6 +35,11 @@ const saleSchema = new mongoose.Schema({
   },
   products: [
     {
+      product_id:{
+        type:mongoose.Schema.ObjectId,
+        ref:"Product",
+        required:true
+      },
       product_name: {
         type: String,
         required: [true, "Please Enter product Name"],

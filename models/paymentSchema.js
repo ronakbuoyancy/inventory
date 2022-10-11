@@ -6,8 +6,9 @@ const paymentSchema = new mongoose.Schema({
     required: [true, "Please Enter Shop Name"],
   },
   customer_id:{
-    type: String,
-    required: [true, "Please Enter Customer Id"],
+    type:mongoose.Schema.ObjectId,
+    ref:"Customer",
+    required:true
   },
   date_of_payment: {
     type: Date,

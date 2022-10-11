@@ -2,12 +2,20 @@ const Sale = require("../models/saleSchema");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apifeatures");
+const Customer = require("../models/customerSchema");
 
 //create Sale
 
 exports.createSale = async (req, res, next) => {
-  console.log("data", req.body);
+  //console.log("data", req.body);
   const sale = await Sale.create(req.body);
+  const customer = await Customer.findById(req.body.customer_id)
+  const balance = customer.balance + req.body.Total
+  await Customer.findByIdAndUpdate(req.body.customer_id, {balance:balance}, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
   res.status(201).json({
     success: true,
     sale,

@@ -15,6 +15,11 @@ const purchaseSchema = new mongoose.Schema({
   },
   products: [
     {
+      product_id:{
+        type:mongoose.Schema.ObjectId,
+        ref:"Product",
+        required:true
+      },
       product_name: {
         type: String,
         required: [true, "Please Enter product Name"],
