@@ -1,10 +1,19 @@
 const Payment = require("../models/paymentSchema");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
+const Customer = require("../models/customerSchema");
 
 exports.createPayment = catchAsyncError(async (req, res, next) => {
-  console.log("data", req.body);
+  //console.log("data", req.body);
   const payment = await Payment.create(req.body);
+  const customer = await Customer.findById(req.body.customer_id)
+  const balance = customer.balance + req.body.amount
+  const data = await Customer.findByIdAndUpdate(req.body.customer_id, {balance:balance}, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  console.log(data)
   res.status(201).json({
     success: true,
     payment,
