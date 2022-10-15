@@ -2,12 +2,22 @@ const Purchase = require("../models/purchaseSchema");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apifeatures");
+const Product = require("../models/productSchema");
 
 //create Purchase
 
 exports.createPurchase = async (req, res, next) => {
   //console.log("data", req.body);
   const purchase = await Purchase.create(req.body);
+  req.body.products.map(async (item, index)=>{
+    const product = await Product.findById(item.product_id)
+    const stock = product.stock + item.quantity
+    await Product.findByIdAndUpdate(item.product_id, {stock}, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+  })
   res.status(201).json({
     success: true,
     purchase,

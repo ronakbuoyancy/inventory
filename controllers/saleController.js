@@ -3,19 +3,29 @@ const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apifeatures");
 const Customer = require("../models/customerSchema");
+const Product = require("../models/productSchema");
 
 //create Sale
 
 exports.createSale = async (req, res, next) => {
   //console.log("data", req.body);
   const sale = await Sale.create(req.body);
-  const customer = await Customer.findById(req.body.customer_id)
+  const customer = await Customer.findById(req.body.customer.customer_id)
   const balance = customer.balance + req.body.Total
-  await Customer.findByIdAndUpdate(req.body.customer_id, {balance:balance}, {
+  await Customer.findByIdAndUpdate(req.body.customer.customer_id, {balance}, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
+  req.body.products.map(async (item, index)=>{
+    const product = await Product.findById(item.product_id)
+    const stock = product.stock - item.quantity
+    await Product.findByIdAndUpdate(item.product_id, {stock}, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+  })
   res.status(201).json({
     success: true,
     sale,
@@ -35,7 +45,6 @@ exports.getAllSalebyDate = catchAsyncError(async (req, res) => {
   const allsale = await Sale.find();
   const startdate = new Date(req.body.startdate)
   const enddate = new Date(req.body.enddate)
-  console.log({startdate})
   let sales = []
   allsale.map((item, index)=>{
       if(item.date_of_invoice >= startdate &&  item.date_of_invoice <= enddate){

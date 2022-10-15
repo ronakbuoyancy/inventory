@@ -34,9 +34,9 @@ const purchaseSchema = new mongoose.Schema({
         required: [true, "Please Enter Quantity"],
         maxLength:4
       },
-      perchase_price: {
+      purchase_price: {
         type: Number,
-        required: [true, "Please Enter cost price"],
+        required: [true, "Please Enter Purchase price"],
         maxLength:8
       },
       discount_percentage:{
