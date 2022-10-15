@@ -36,7 +36,7 @@ exports.getAllSale = catchAsyncError(async (req, res) => {
   const resultPerPage = 5;
   const salesCount = await Sale.countDocuments();
   const Apifeature = new ApiFeatures(Sale.find(), req.query)
-    .searchCustomer()
+    .searchSalesCustomer()
     .pagination(resultPerPage);
   const sale = await Apifeature.query;
   res.status(200).json({ success: true, sale, no_of_sales: salesCount });

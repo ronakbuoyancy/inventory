@@ -5,7 +5,7 @@ class ApiFeatures {
   }
 
   searchProduct() {
-     const keyword = this.queryStr.keyword
+    const keyword = this.queryStr.keyword
       ? {
           product_name: {
             $regex: this.queryStr.keyword,
@@ -27,7 +27,21 @@ class ApiFeatures {
           },
         }
       : {};
-    console.log(keyword);
+    this.query = this.query.find({ ...keyword });
+    return this;
+  }
+
+  searchSalesCustomer() {
+    const keyword = this.queryStr.keyword
+      ? {
+          customer: {
+            shop_name: {
+              $regex: this.queryStr.keyword,
+              $options: "i",
+            },
+          },
+        }
+      : {};
     this.query = this.query.find({ ...keyword });
     return this;
   }
