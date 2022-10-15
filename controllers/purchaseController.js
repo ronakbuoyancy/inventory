@@ -24,6 +24,18 @@ exports.getAllPurchase = catchAsyncError(async (req, res) => {
   res.status(200).json({ success: true, purchase, no_of_purchases: purchaseCount });
 });
 
+exports.getAllPurchasebyDate = catchAsyncError(async (req, res) => {
+  const allpurchase = await Purchase.find();
+  const startdate = new Date(req.body.startdate)
+  const enddate = new Date(req.body.enddate)
+  let purchases = []
+  allpurchase.map((item, index)=>{
+      if(item.date_of_invoice >= startdate &&  item.date_of_invoice <= enddate){
+      purchases.push(item)
+      }
+  })
+  res.status(200).json({ success: true, purchases });
+});
 exports.getPurchaseDetails = catchAsyncError(async (req, res, next) => {
   let purchase = await Purchase.findById(req.params.id);
 

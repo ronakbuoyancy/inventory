@@ -31,6 +31,19 @@ exports.getAllSale = catchAsyncError(async (req, res) => {
   const sale = await Apifeature.query;
   res.status(200).json({ success: true, sale, no_of_sales: salesCount });
 });
+exports.getAllSalebyDate = catchAsyncError(async (req, res) => {
+  const allsale = await Sale.find();
+  const startdate = new Date(req.body.startdate)
+  const enddate = new Date(req.body.enddate)
+  console.log({startdate})
+  let sales = []
+  allsale.map((item, index)=>{
+      if(item.date_of_invoice >= startdate &&  item.date_of_invoice <= enddate){
+      sales.push(item)
+      }
+  })
+  res.status(200).json({ success: true, sales });
+});
 
 exports.getSaleDetails = catchAsyncError(async (req, res, next) => {
   let sale = await Sale.findById(req.params.id);
