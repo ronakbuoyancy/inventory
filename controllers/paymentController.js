@@ -39,7 +39,13 @@ exports.getPaymentDetails = catchAsyncError(async (req, res, next) => {
 
 exports.updatePayment = catchAsyncError(async (req, res, next) => {
   let payment = await Payment.findById(req.params.id);
-
+  const customer = await Customer.findById(req.body.customer_id)
+  const balance = customer.balance + payment.amount - req.body.amount
+  await Customer.findByIdAndUpdate(req.body.customer_id, {balance:balance}, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
   if (!payment) {
     return next(new ErrorHandler("Payment not Found", 404));
   }
@@ -57,7 +63,13 @@ exports.updatePayment = catchAsyncError(async (req, res, next) => {
 
 exports.deletePayment = catchAsyncError(async (req, res, next) => {
   let payment = await Payment.findById(req.params.id);
-
+  const customer = await Customer.findById(req.body.customer_id)
+  const balance = customer.balance + payment.amount
+  await Customer.findByIdAndUpdate(req.body.customer_id, {balance:balance}, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
   if (!payment) {
     return next(new ErrorHandler("payment not Found", 404));
   }
