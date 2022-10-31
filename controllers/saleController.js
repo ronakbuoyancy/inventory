@@ -35,7 +35,7 @@ exports.createSale = async (req, res, next) => {
 exports.getAllSale = catchAsyncError(async (req, res) => {
   const resultPerPage = 5;
   const salesCount = await Sale.countDocuments();
-  const Apifeature = new ApiFeatures(Sale.find(), req.query)
+  const Apifeature = new ApiFeatures(Sale.find().sort({invoice_no:-1}), req.query)
     .searchSalesCustomer()
     .pagination(resultPerPage);
   const sale = await Apifeature.query;
@@ -52,6 +52,17 @@ exports.getAllSalebyDate = catchAsyncError(async (req, res) => {
       }
   })
   res.status(200).json({ success: true, sales });
+});
+exports.getNextInvoice = catchAsyncError(async (req, res) => {
+  const allsale = await Sale.find();
+  let new_invoice_no = 0;
+  allsale.map((item, index)=>{
+      if(item.invoice_no > new_invoice_no){
+      new_invoice_no = item.invoice_no;
+      }
+  })
+  new_invoice_no = new_invoice_no + 1;
+  res.status(200).json({ success: true, new_invoice_no });
 });
 
 exports.getSaleDetails = catchAsyncError(async (req, res, next) => {

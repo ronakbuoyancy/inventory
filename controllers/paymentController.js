@@ -21,7 +21,7 @@ exports.createPayment = catchAsyncError(async (req, res, next) => {
 
 exports.getPaymentsByCustomer = catchAsyncError(async (req, res) => {
   const customer_id = req.params.customer_id;
-  const payments = await Payment.find({customer_id})
+  const payments = await Payment.find({customer_id}).sort({date_of_payment:1})
   res.status(200).json({ success: true, payments });
 });
 
